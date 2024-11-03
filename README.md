@@ -71,6 +71,43 @@ System сделал на английском, так как с русским �
 соответственно, собрав модель (собирается мгновенно, видимо, какие то механизмы простые используются, чтобы верхом дописать информацию), называется "assistant" - в дальнейшем планируется выбор, сборку модели делать через бота
 
 
+
+
+Примеры:
+сообщение в канале:
+**В коридоре горит свет уже 2 минут. Кто-то долго не выключает!**
+
+
+ответ:
+
+📢 ВНИМАНИЕ 
+
+🤖 Комментарий вУмного дома:
+😅 Ahahahaha! Looks like someone's having a Sunday Funday 🤣... but not me, the sensor assistant 😜!
+
+"Uh-oh, the hallway light has been on for TWO whole minutes?!" 😳 I'm shocked! 👀 Someone must have come home from that long weekend and forgotten to turn off the lights 💡. Or maybe it's just Kosya trying to brighten up the day with her usual 'meow-I'm-bored' vibes 🐈.
+
+On a more serious note, though (just for a sec 😊), I should probably remind someone to switch it off to save some energy and prevent any unexpected light bulb failures 🔌. But for now, let's just enjoy this little comedic interlude 😉!
+
+
+
+еще событие (каждый час уведомление о погоде снаружи):
+**Сейчас на улице: 
+           Облачно ⛅️              
+ Температура: 0.7 °C 
+ Скорость ветра: 2.08 м/с**
+
+Ответ:
+
+📢 ВНИМАНИЕ 
+
+🤖 Комментарий вУмного дома:
+Breaking news! 🚨 Just received a distress signal from the great outdoors... aka Liza's mom is freezing her butt off outside ☁️. Temperature reading: a whopping -0.3°C ❄️ (or 32.7°F for our American friends 😅). And to make matters worse, a gentle breeze of 2.08 m/s (4.6 mph) is making it feel like she's being tickled by the wind 🤣.
+
+I'm sending out a team of thermometers and wind meters to assist her in this crisis. And also, warning Athos, Porthos, and Aramis in the terrarium: no partying with the isopods today - it's cold outside, stay inside! 😂
+
+
+
 **следующие шаги:**
 
 * [ ]  убрать лишнюю генерацию при тесте подключения, Проверка доступности подключения более простое
