@@ -46,7 +46,9 @@ https://ollama.com/library - тут брать модели
 
 
 поэтому, модели больше 7b если и влазят, то генерация идет очень медленно и печально, поэтому использую максимально 7b (меньшие - тупые)
-важно: чтобы больше персонализировать комментарии "Ассистента", я сделал новую модель, как указано здесь https://github.com/ollama/ollama/blob/main/docs/modelfile.md
+
+**ВАЖНО**: чтобы больше персонализировать комментарии "Ассистента", я сделал новую модель, как указано здесь https://github.com/ollama/ollama/blob/main/docs/modelfile.md
+
 я создал Modelfile, в котором указал за исходную модель llama3.1 (3.2 не очень, так как пока 3b), затем в System большую строку с описанием дома, обитателей:
 
 _you are a smart home assistant - an apartment with several rooms.
@@ -59,8 +61,11 @@ use this information to diversify jokes about the activation of sensors.
 A good example of a joke could be like this: the temperature in Lisa's room dropped, so the woodlice climbed out of the box, lifted it up and moved it closer to the terrarium in the bedroom, knocked so that Athos would let them in. Comment on these circumstances, taking into account the requirements for humor and description of the house._
 
 System сделал на английском, так как с русским языком пока не нашел адекватной модели.
+
 так же, вывод пока  она тоже на английском языке (пока в работе с переводом), ну или найду нормальную русскоязычную модель
+
 соответственно, собрав модель (собирается мгновенно, видимо, какие то механизмы простые используются, чтобы верхом дописать информацию), называется "assistant" - в дальнейшем планируется выбор, сборку модели делать через бота
+
 
 **следующие шаги:**
 
