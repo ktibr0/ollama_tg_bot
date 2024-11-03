@@ -7,7 +7,7 @@
 
 _the code is written using LLM, so it is not optimal, contains debug notifications, etc., but it works_ 
 
-Important: The bot must be running as an administrator (both where it gets messages from and where it sends them to). For me, this is the same channel, so that the bot does not start chatting with itself and commenting endlessly, a check is added to the code: if the message begins with the 📢 sign, then such messages are not processed. Indeed, all messages from the bot begin with such a symbol.
+Important: The bot must be running as an administrator of telegramm channels (both where it gets messages from and where it sends them to). For me, this is the same channel, so that the bot does not start chatting with itself and commenting endlessly, a check is added to the code: if the message begins with the 📢 sign, then such messages are not processed. Indeed, all messages from the bot begin with such a symbol.
 
 Implementation via Docker, since in the future the deployment of the circuit has been simplified if Ollama is added to docker-compose, but for now it works separately 
 rename example.env to .env and fill in the variables in the .env file 
