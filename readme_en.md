@@ -23,8 +23,14 @@ FORWARD_FROM_CHANNEL= # channel id from where it will pick up messages
 ollama_url = # local ollama reverse address - usually (if on the same PC - 'http://localhost:11434', port 11434) (for now it is hardcoded in the code) 
 
 everything is created without quotes (single and double - without any quotes at all) note, channels in telegram start with "-100", you can find out the channel ID and your ID in Telegram by sending a message (or forwarding it from the channel) to the bot Get my ID 
-is launched through the container assembly (** docker Compose Up --build -d**), 
-and then just ** docker Compose Up -d** (I'm too lazy to upload to the Docker Hub image) 
+is launched through the container assembly 
+
+ **docker Compose Up --build -d**
+
+and then just 
+
+ **docker Compose Up -d**  (I'm too lazy to upload to the Docker Hub image) 
+
 
 # Ollama: 
 https://ollama.com/ - Ollama project 
@@ -40,8 +46,12 @@ generation takes about 30 seconds, while I'm experimenting, what settings are us
 
 **IMPORTANT**: 
 to more personalize the "Assistant" comments, I made a new model, as indicated here 
+
 https://github.com/ollama/ollama/blob/main/docs/modelfile.md, 
-I created a Modelfile, which specifies the original model llama3.1 (3.2 is not very good, since it is 3b for now), then in the system large text with a description of the house, the inhabitant: _you are a smart home assistant - an apartment with several rooms.
+
+I created a Modelfile, which specifies the original model llama3.1 (3.2 is not very good, since it is 3b for now), then in the system large text with a description of the house, the inhabitant: 
+
+_you are a smart home assistant - an apartment with several rooms.
 Bedroom - there are sensors, as well as a terrarium with frogs, with a built-in sensor. frogs - litoria, called Athos, Porthos and Aramis.
 A warm shelf on the balcony and turns on and off every five minutes so as not to overheat.
 k. Lisa - this is the room of Lisa - the daughter of the owners of the apartment, she is 18 years old and she is currently studying in Seoul, studying at the university and does not live with her parents.
