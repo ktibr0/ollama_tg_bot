@@ -1,5 +1,5 @@
 # Бот - комментатор
-**Telegram bot, receives messages from channel, use Ollama to comment events** (english version of readme readme_en.md (machine translated, sorry)
+**Telegram bot, receives messages from channel, use Ollama to comment events** (english version of readme [readme_en.md](https://github.com/ktibr0/ollama_tg_bot/blob/main/readme_en.md) (machine translated, sorry)
 
 **Бот сделан для оживления сообщений умного дома, которые направляются в частный телеграм канал - показания датчиков, погода, уведомления и т.д.**
 
