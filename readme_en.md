@@ -1,13 +1,39 @@
-# Bot - commentator 
-**Telegram bot, receives messages from the channel, uses Ollama to comment on events** 
 
-**The bot is made to trigger smart home messages that are sent to a private telegram channel - providing sensors, weather, notifications, etc.**
+# **Home Assistant Humor Bot**
 
-**bot uses locall  Ollama, transmits a message from the channel and receives a response - there was a joke with a comment.** 
+## **Description**
+
+Tired of boring status updates from your smart home? Meet the Home Assistant Humor Bot, your personal comedian for all things IoT. This bot brings a bit of wit and charm to every notification, so you can enjoy lighthearted commentary on your home's daily routines. Whether your lights are switching on or your thermostat is adjusting, the bot's snappy responses will keep you entertained.
+
+## **Features**
+
+- **Smart Humor for Smart Homes**: Automatically responds to various smart home notifications with pre-set or random humorous comments.
+- **Customizable Responses**: Easily add, edit, or remove responses to match your sense of humor or your home's personality.
+- **Effortless Integration**: Works seamlessly with your Home Assistant setup, adding a touch of fun without extra hassle.
+
+
+
 
 _the code is written using LLM, so it is not optimal, contains debug notifications, etc., but it works_ 
 
 Important: The bot must be running as an administrator of telegramm channels (both where it gets messages from and where it sends them to). For me, this is the same channel, so that the bot does not start chatting with itself and commenting endlessly, a check is added to the code: if the message begins with the 📢 sign, then such messages are not processed. Indeed, all messages from the bot begin with such a symbol.
+
+## **Installation**
+
+### **Requirements**
+
+- **Python** 3.8 or higher
+- **Telegram Bot API Token** (You'll need this to allow the bot to bring humor to your home)
+- **Home Assistant** setup (the bot is designed to complement your existing setup)
+
+### **Setup**
+
+1. **Clone the Repository**  
+   Clone this repository to your local machine:
+   ```bash
+   git clone https://github.com/YourUsername/Home-Assistant-Humor-Bot.git
+   cd Home-Assistant-Humor-Bot
+
 
 Implementation via Docker, since in the future the deployment of the circuit has been simplified if Ollama is added to docker-compose, but for now it works separately 
 rename example.env to .env and fill in the variables in the .env file 
@@ -25,9 +51,11 @@ ollama_url = # local ollama reverse address - usually (if on the same PC - 'http
 everything is created without quotes (single and double - without any quotes at all) note, channels in telegram start with "-100", you can find out the channel ID and your ID in Telegram by sending a message (or forwarding it from the channel) to the bot Get my ID 
 is launched through the container assembly 
 
- **docker Compose Up --build -d**
 
-and then just 
+**docker Compose Up --build -d**
+
+
+and then just (when you change only .env file)
 
  **docker Compose Up -d**  (I'm too lazy to upload to the Docker Hub image) 
 
@@ -66,14 +94,23 @@ also, the conclusion is that for now it is also in English (still in the works w
 
 accordingly, having assembled the model (it is assembled instantly, apparently, some simple mechanisms are used to add information on top), it is called "assistant" - in the future it is planned to choose, to assemble the model through a bot
 
-# Examples:
 
-**message in channel:**
 
-The hallway light has been on for 2 minutes. Someone has been leaving it on for a long time!
+## **Usage**
 
-**reply:**
+Once the bot is configured and running, it will automatically respond to any notifications sent  to your designated Telegram chat. All you need to do is sit back, relax, and enjoy the witty (or occasionally cheesy) commentary on your smart home's activities.
 
+Commands and interactions include:
+
+- **Command Options** (coming soon): Planned updates will include options to adjust humor levels and command responses directly from the chat.
+
+## **Examples**
+
+Here’s a glimpse of what you can expect from the Home Assistant Humor Bot:
+
+1. **Notification**: The hallway light has been on for 2 minutes. Someone has been leaving it on for a long time!
+
+   **Bot’s Response**: 
 📢 ATTENTION
 
 🤖 Comment in Smart Home:
@@ -84,13 +121,14 @@ The hallway light has been on for 2 minutes. Someone has been leaving it on for 
 
 On a more serious note, though (just for a sec 😊), I should probably remind someone to switch it off to save some energy and prevent any unexpected light bulb failures 🔌. But for now, let's just enjoy this little comedic interlude 😉!
 
-**Another event (every hourly weather notification outside):**
+2. **Notification**: 
+**(every hourly weather notification outside):**
 
 Currently outside: Cloudy ⛅️
+
 Temperature: 0.7 °C Wind speed: 2.08 m/s
 
-**Answer:**
-
+**Bot’s Response**: 
 📢 ATTENTION
 
 🤖 Comment in Smart Home:
@@ -98,6 +136,12 @@ Temperature: 0.7 °C Wind speed: 2.08 m/s
 Breaking news! 🚨 Just received a distress signal from the great outdoors... aka Liza's mom is freezing her butt off outside ☁️. Temperature reading: a whopping -0.3°C ❄️ (or 32.7°F for our American friends 😅). And to make matters worse, a gentle breeze of 2.08 m/s (4.6 mph) is making it feel like she's being tickled by the wind 🤣.
 
 I'm sending out a team of thermometers and wind meters to assist her in this crisis. And also, warning Athos, Porthos, and Aramis in the terrarium: no partying with the isopods today - it's cold outside, stay inside! 😂
+
+
+These examples are just a taste. 
+
+
+
 
 # Next steps:
 
