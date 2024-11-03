@@ -67,7 +67,11 @@ https://ollama. com/library - I get the models here,
 
 everything runs in Proxmox for me, 
 Advanced container with Docker! 
-[image] (https://github.com/user-attachments/assets/cde517d3-1363-4c5c-8653-0cb98590ca28) 
+
+
+![image](https://github.com/user-attachments/assets/cde517d3-1363-4c5c-8653-0cb98590ca28)
+
+
 
 therefore, models larger than 7b, if they fit, the generation is very slow and sad, so they use a maximum of 7b (smaller ones are stupid). 
 generation takes about 30 seconds, while I'm experimenting, what settings are used - context size, conversation input, etc.
