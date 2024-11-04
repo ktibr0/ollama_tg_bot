@@ -7,9 +7,8 @@ Tired of boring status updates from your smart home? Meet the Home Assistant Hum
 
 ## **Features**
 
-- **Smart Humor for Smart Homes**: Automatically responds to various smart home notifications with pre-set or random humorous comments.
-- **Customizable Responses**: Easily add, edit, or remove responses to match your sense of humor or your home's personality.
-- **Effortless Integration**: Works seamlessly with your Home Assistant setup, adding a touch of fun without extra hassle.
+- **Smart Humor for Smart Homes**: Automatically responds to various smart home notifications to telegramm channel.
+
 
 
 
