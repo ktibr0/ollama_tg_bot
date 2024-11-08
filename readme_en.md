@@ -144,7 +144,8 @@ I'm sending out a team of thermometers and wind meters to assist her in this cri
 These examples are just a taste. 
 
 
-
+in real time (in Russian)
+https://t.me/hass_commentator
 
 # Next steps:
 
