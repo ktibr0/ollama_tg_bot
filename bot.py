@@ -10,10 +10,18 @@ from dotenv import load_dotenv
 from datetime import datetime
 import pytz
 import random
+from telegram import Update
+from telegram.ext import ApplicationBuilder, CommandHandler, CallbackQueryHandler, PicklePersistence
+
+from menu import main_menu, handle_menu_navigation  # Добавляем импорт из файла меню
+from state import bot_state
 
 
+# Настраиваем постоянное хранилище
+persistence = PicklePersistence(filepath="bot_data.pkl")
 
 
+#from keyboard.menu import main_menu, handle_menu_navigation  # Добавляем импорт из файла меню
 # Словари для перевода дней недели и месяцев
 days_of_week = {
     "Monday": "понедельник",
@@ -76,7 +84,8 @@ emotion = get_random_emotion()
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
-
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text("Главное меню:", reply_markup=main_menu())
 
 # Функция для тестирования подключения к Ollama
 async def test_ollama_connection():
@@ -90,14 +99,30 @@ async def test_ollama_connection():
 
 
 
-async def get_ollama_response(message):
+async def get_ollama_response(message, context):
+    temperature = bot_state.temperature
+    logging.info(f"Используем глобальную температуру из bot_state: {temperature}")
+    logging.info(f"Используем глобальную температуру: {temperature}")
+        
+    logging.info(f"Using temperature: {temperature}")
+
+   
+
+#async def get_ollama_response(message, context=None):
+
+#    if not context or not context.user_data:
+#        temperature = 0.8  # Значение по умолчанию
+#    else:
+#        temperature = context.user_data.get("temperature", 0.8)
+    
+    logging.info(f"Температура, переданная в запрос: {temperature}")  # Логируем значение температуры
     url = f'{ollama_url}/api/generate'
     headers = {
     'Content-Type': 'application/json',
     }
     # Инициализируем emotion для всех случаев
     emotion = get_random_emotion()
-        
+
         
         # Проверяем, начинается ли сообщение с "!"
     if message.startswith("!"):
@@ -122,18 +147,37 @@ async def get_ollama_response(message):
 
     
 
-    logging.info(f"Sending prompt to Ollama: {prompt}")
+    logging.info(f"Sending prompt to Ollama: {prompt}, {temperature}")
+
+    # data = {
+        # 'model': 'Jann_Max',
+        # 'keep_alive': 30,
+        # 'prompt': prompt,
+        # "options": {
+            # "temperature": temperature
+ # #           "num_thread": 16
+        # },
+        # "stream": False
+    # }
+
     
     data = {
-        'model': 'hass_jann:latest',
+        'model': 'Jann_Max',
         'prompt': prompt,
-        "options": {
-            "temperature": 0.8,
-            "num_thread": 16
-        },
         "stream": False
     }
-
+    
+    # data = {
+        # 'model': 'Jann_Max',
+        # 'prompt': prompt,
+        # "options": {
+            # "temperature": temperature,
+            # "num_thread": 16
+            
+        # },
+        # "stream": False
+    # }
+    logging.error(f"полный запрос {data} ")     
     try:
         async with aiohttp.ClientSession() as session:
             async with session.post(url, headers=headers, json=data) as response:
@@ -166,7 +210,7 @@ async def send_startup_message(context: ContextTypes.DEFAULT_TYPE) -> None:
 
     if connection_successful:
         # Если подключение успешно, отправляем сообщение о запуске
-       # ollama_response = await get_ollama_response("Пошути про обитателей дома")  # Запрашиваем шутку для примера
+       # ollama_response = await get_ollama_response("!Пошути про обитателей дома")  # Запрашиваем шутку для примера
         startup_message = f'📢Бот готов к работе.' #\n\n Шутка от Ollama: {ollama_response}'
     else:
         # Если подключение не удалось, сообщаем об этом
@@ -194,12 +238,11 @@ async def handle_all_messages(update: Update, context: ContextTypes.DEFAULT_TYPE
 
         if channel_identifier in donor_channels:
             try:
-                # Получаем ответ от Ollama
                 original_text = update.channel_post.text
                 logger.info(f"Sending to Ollama: {original_text}")
-                
-                ollama_response, emotion = await get_ollama_response(original_text) 
-
+	            
+	            # Явно передаем context в get_ollama_response
+                ollama_response, emotion = await get_ollama_response(original_text, context=context)
                 logger.info(f"Received from Ollama: {ollama_response}")
 
 
@@ -250,8 +293,6 @@ def error_handler(update: object, context: ContextTypes.DEFAULT_TYPE) -> None:
 
 
 
-
-
 async def get_ollama_models():
     url = f'{ollama_url}/api/tags'
     headers = {'Content-Type': 'application/json'}
@@ -272,54 +313,6 @@ async def get_ollama_models():
         return []
 
 
-
-
-
-async def show_models(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    models = await get_ollama_models()
-    print("Функция show_models вызвана")
-    if not models:
-        await update.message.reply_text("Не удалось получить список моделей.")
-        return
-
-    keyboard = [
-        [InlineKeyboardButton(model, callback_data=f"model_{model}")]  # Изменили префикс
-        for model in models
-    ]
-    reply_markup = InlineKeyboardMarkup(keyboard)
-    await update.message.reply_text("Выберите модель:", reply_markup=reply_markup)
-
-
-
-async def choose_model(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    query = update.callback_query
-    if not query.data.startswith("model_"):  # Проверяем префикс
-        return
-
-    await query.answer()
-
-    user_id = query.from_user.id
-    chosen_model = query.data.replace("model_", "")  # Удаляем префикс
-    
-    # Обновляем модель в словаре user_models
-    user_models[user_id] = chosen_model
-    
-    context.user_data["selected_model"] = chosen_model
-    await query.edit_message_text(f"Вы выбрали модель: {chosen_model}")
-
-async def model_selection(update: Update, context: CallbackContext) -> None:
-    logger.info("Команда /model получена")
-    models = await get_ollama_models()
-    if models:
-        keyboard = [[InlineKeyboardButton(model, callback_data=f"model_{model}") for model in models]]
-        reply_markup = InlineKeyboardMarkup(keyboard)
-        await update.message.reply_text("Выберите модель:", reply_markup=reply_markup)
-    else:
-        await update.message.reply_text("Нет доступных моделей.")
-
-    
- 
-
 async def debug_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Отладочная функция для логирования всех входящих сообщений"""
     logger.debug("=== New Message Debug ===")
@@ -335,6 +328,8 @@ async def debug_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> N
         logger.debug(f"Channel info: {update.channel_post.chat}")
     logger.debug("========================")
 
+
+
 async def main() -> None:
     try:
         # Проверяем подключение к Ollama при запуске
@@ -343,21 +338,21 @@ async def main() -> None:
             return
 
         # Создаем приложение
-        application = ApplicationBuilder().token(bot_token).build()
-        
+        application = ApplicationBuilder().token(bot_token).persistence(persistence).build()
+                
+        application.add_handler(CommandHandler("start", start))  # Обработчик для команды старт
+        application.add_handler(CallbackQueryHandler(handle_menu_navigation))  # Обработчик для меню навигации
         # Добавляем обработчики
 
         application.add_handler(MessageHandler(filters.ALL, debug_message), group=-2)
         application.add_handler(MessageHandler(filters.ALL, log_update), group=-1)
         application.job_queue.run_once(send_startup_message, 1)
-        
-        application.add_handler(CommandHandler("model", show_models))
+
         application.add_handler(MessageHandler(filters.ALL, handle_all_messages))
         
         application.add_error_handler(error_handler)
+
         
-        
-        application.add_handler(CallbackQueryHandler(choose_model, pattern="^model_"))
         
         logger.info("All handlers added successfully")
         logger.info("Starting polling...")
